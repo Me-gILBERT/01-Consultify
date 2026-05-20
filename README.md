@@ -7,12 +7,14 @@ A consultation booking platform built with ASP.NET Core 10 MVC. Consultants set 
 ### Three Role-Based Dashboards
 
 **Consultant**
+
 - Create availability by picking a date + time range — slots are automatically split into 30-minute intervals
 - View all time slots with booked/available/past status
 - See upcoming appointments and mark them as completed
 - Edit profile (bio, specialization, hourly rate, experience)
 
 **Customer**
+
 - Browse consultants with search, specialization filter, and rating display
 - View consultant profiles with available slots for the next 14 days
 - Book a 30-minute slot with concurrency-safe double-booking prevention
@@ -20,6 +22,7 @@ A consultation booking platform built with ASP.NET Core 10 MVC. Consultants set 
 - Leave reviews (1-5 rating + comment) on completed appointments
 
 **Admin**
+
 - Dashboard with system-wide statistics (users, consultants, appointments)
 - Manage users — search, filter by role, activate/deactivate
 - View and cancel any appointment
@@ -31,14 +34,14 @@ Full JSON API alongside MVC views. Endpoints include consultant listing, slot ma
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | ASP.NET Core 10 MVC |
-| Database | PostgreSQL (via Entity Framework Core + Npgsql) |
-| Authentication | ASP.NET Core Identity (cookie-based, roles) |
-| ORM | Entity Framework Core (code-first) |
-| UI | Razor Views + Bootstrap 5 |
-| Testing | xUnit + Moq + EF Core InMemory |
+| Layer          | Technology                                      |
+| -------------- | ----------------------------------------------- |
+| Framework      | ASP.NET Core 10 MVC                             |
+| Database       | PostgreSQL (via Entity Framework Core + Npgsql) |
+| Authentication | ASP.NET Core Identity (cookie-based, roles)     |
+| ORM            | Entity Framework Core (code-first)              |
+| UI             | Razor Views + Bootstrap 5                       |
+| Testing        | xUnit + Moq + EF Core InMemory                  |
 
 ## Getting Started
 
@@ -68,14 +71,14 @@ Navigate to `https://localhost:5001` (or the URL shown in the terminal).
 
 ### Seed Accounts
 
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | `admin@consultify.com` | `Admin123!` |
-| Consultant | `sarah.chen@consultify.com` | `Consult123!` |
-| Consultant | `marcus.johnson@consultify.com` | `Consult123!` |
-| Consultant | `priya.patel@consultify.com` | `Consult123!` |
-| Customer | `alice@example.com` | `Customer123!` |
-| Customer | `bob@example.com` | `Customer123!` |
+| Role       | Email                           | Password       |
+| ---------- | ------------------------------- | -------------- |
+| Admin      | `admin@consultify.com`          | `Admin123!`    |
+| Consultant | `sarah.chen@consultify.com`     | `Consult123!`  |
+| Consultant | `marcus.johnson@consultify.com` | `Consult123!`  |
+| Consultant | `priya.patel@consultify.com`    | `Consult123!`  |
+| Customer   | `alice@example.com`             | `Customer123!` |
+| Customer   | `bob@example.com`               | `Customer123!` |
 
 Seed consultants come pre-loaded with 30-minute time slots for the next 7 business days (9:00 AM - 12:00 PM).
 
@@ -100,22 +103,23 @@ Consultify/
 
 ## API Endpoints
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/api/consultants` | Public | List consultants (search, filter, paginate) |
-| GET | `/api/consultants/{id}` | Public | Consultant profile + average rating |
-| GET | `/api/consultants/{id}/reviews` | Public | Reviews for a consultant |
-| POST | `/api/timeslots` | Consultant | Create time slots (auto-split) |
-| DELETE | `/api/timeslots/{id}` | Consultant | Delete own slot (unbooked only) |
-| GET | `/api/appointments` | Authenticated | Get appointments (role-filtered) |
-| POST | `/api/appointments` | Customer | Book a slot |
-| PUT | `/api/appointments/{id}/cancel` | Authenticated | Cancel appointment |
-| POST | `/api/reviews` | Customer | Submit review |
-| GET | `/api/admin/users` | Admin | List all users |
-| PUT | `/api/admin/users/{id}/toggle-status` | Admin | Activate/deactivate user |
-| DELETE | `/api/admin/reviews/{id}` | Admin | Delete review |
+| Method | Endpoint                              | Auth          | Description                                 |
+| ------ | ------------------------------------- | ------------- | ------------------------------------------- |
+| GET    | `/api/consultants`                    | Public        | List consultants (search, filter, paginate) |
+| GET    | `/api/consultants/{id}`               | Public        | Consultant profile + average rating         |
+| GET    | `/api/consultants/{id}/reviews`       | Public        | Reviews for a consultant                    |
+| POST   | `/api/timeslots`                      | Consultant    | Create time slots (auto-split)              |
+| DELETE | `/api/timeslots/{id}`                 | Consultant    | Delete own slot (unbooked only)             |
+| GET    | `/api/appointments`                   | Authenticated | Get appointments (role-filtered)            |
+| POST   | `/api/appointments`                   | Customer      | Book a slot                                 |
+| PUT    | `/api/appointments/{id}/cancel`       | Authenticated | Cancel appointment                          |
+| POST   | `/api/reviews`                        | Customer      | Submit review                               |
+| GET    | `/api/admin/users`                    | Admin         | List all users                              |
+| PUT    | `/api/admin/users/{id}/toggle-status` | Admin         | Activate/deactivate user                    |
+| DELETE | `/api/admin/reviews/{id}`             | Admin         | Delete review                               |
 
 All API responses use the `ApiResponse<T>` envelope:
+
 ```json
 {
   "success": true,
@@ -141,13 +145,9 @@ dotnet test tests/Consultify.Web.Tests
 ```
 
 Tests use EF Core InMemory database (no PostgreSQL required) and cover:
+
 - Slot availability filtering
 - Double-booking prevention
 - 24-hour cancellation enforcement
 - 30-minute slot auto-split generation
 - Slot deletion protection for booked slots
-
-## Documentation
-
-- `plan_consultify_4.md` — Full architecture plan
-- `LOGBOOK.md` — Detailed build logbook
